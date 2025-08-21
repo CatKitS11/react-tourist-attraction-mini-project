@@ -1,14 +1,21 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
-const PlaceCards = () => {
+const PlaceCards = ({search}) => {
   const [places, setPlaces] = useState([]);
+
   useEffect(() => {
     getPlaces();
-  }, []);
+  }, [search]);
+
   const getPlaces = async () => {
-    const result = await axios.get("http://localhost:4001/trips?keywords=");
+    try {
+    const result = await axios.get(`http://localhost:4001/trips?keywords=${search}`);
     console.log(result.data.data);
     setPlaces(result.data.data);
+  } catch (error) {
+    console.log(error);
+    setPlaces([]);
+  }
   };
   return (
     <div className="flex flex-col justify-start m-5 p-5">
@@ -54,7 +61,6 @@ const PlaceCards = () => {
                       src={photo}
                       alt={place.title}
                       className="m-3 rounded-xl"
-                      key={index + 1}
                     />
                   ))}
             </div>

@@ -1,8 +1,10 @@
 import "./App.css";
 import SearchBar from "./components/SearchBar.jsx";
 import PlaceCards from "./components/PlaceCards.jsx";
+import { useState } from "react";
 
 function App() {
+  const [search, setSearch] = useState(""); 
   return (
     <div className="App">
       {/* Start coding here */}
@@ -11,8 +13,8 @@ function App() {
           เที่ยวไหนดี
         </h1>
       </div>
-        <SearchBar />
-        <PlaceCards />
+        <SearchBar search={search} setSearch={setSearch} />
+        <PlaceCards search={search} />
     </div>
   );
 }
