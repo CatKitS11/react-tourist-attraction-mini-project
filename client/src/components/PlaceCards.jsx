@@ -1,14 +1,26 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
-const PlaceCards = () => {
+const PlaceCards = ({ search, tagText }) => {
   const [places, setPlaces] = useState([]);
+
   useEffect(() => {
-    getPlaces();
-  }, []);
+    const timer = setTimeout(() => {
+      getPlaces();
+    }, 500);
+    return () => clearTimeout(timer);
+  }, [search]);
+
   const getPlaces = async () => {
-    const result = await axios.get("http://localhost:4001/trips?keywords=");
-    console.log(result.data.data);
-    setPlaces(result.data.data);
+    try {
+      const result = await axios.get(
+        `http://localhost:4001/trips?keywords=${search}`
+      );
+      console.log(result.data.data);
+      setPlaces(result.data.data);
+    } catch (error) {
+      console.log(error);
+      setPlaces([]);
+    }
   };
   return (
     <div className="flex flex-col justify-start m-5 p-5">
@@ -31,18 +43,23 @@ const PlaceCards = () => {
                 ? place.description.slice(0, 100) + " "
                 : place.description}
             </p>
-            <a href={place.url} target="_blank" className="text-sm  text-sky-500 font-normal justify-start text-left">อ่านต่อ</a>
+            <a
+              href={place.url}
+              target="_blank"
+              className="text-sm  text-sky-500 font-normal justify-start text-left"
+            >
+              อ่านต่อ
+            </a>
             <div className="flex flex-row flex-wrap gap-2">
               <p className="text-sm font-normal">หมวด :</p>
               {place.tags.map((tag) => (
-                <a
-                  href={place.url}
-                  target="_blank"
+                <button
                   key={tag}
-                  className="flex justify-center text-sm font-normal px-1 py-1"
+                  onClick={() => tagText(tag)}
+                  className="flex justify-center text-sm font-normal px-1 py-1 bg-gray-100 rounded-full"
                 >
                   {tag}
-                </a>
+                </button>
               ))}
             </div>
             <div className="flex flex-row justify-start h-full">
@@ -51,10 +68,10 @@ const PlaceCards = () => {
                   .slice(1)
                   .map((photo, index) => (
                     <img
+                      key={index + 1}
                       src={photo}
                       alt={place.title}
                       className="m-3 rounded-xl"
-                      key={index + 1}
                     />
                   ))}
             </div>
