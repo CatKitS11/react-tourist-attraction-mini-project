@@ -4,7 +4,10 @@ const PlaceCards = ({search}) => {
   const [places, setPlaces] = useState([]);
 
   useEffect(() => {
-    getPlaces();
+    const timer = setTimeout(() => {
+      getPlaces();
+    }, 500);
+    return () => clearTimeout(timer);
   }, [search]);
 
   const getPlaces = async () => {
