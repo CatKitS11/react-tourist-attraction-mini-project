@@ -1,12 +1,18 @@
 import "./App.css";
+import SearchBar from "./components/SearchBar.jsx";
+import PlaceCards from "./components/PlaceCards.jsx";
 
 function App() {
   return (
     <div className="App">
       {/* Start coding here */}
-      <h1 className="bg-red-500 text-2xl font-bold text-red-500">Tourist Attraction</h1>
-      <p className="text-lg">Tourist Attraction is a place that is visited by many people.</p>
-      <p className="text-lg">Tourist Attraction is a place that is visited by many people.</p>
+      <div className=" flex flex-col justify-center items-center">
+        <h1 className="text-4xl  text-sky-500 mt-10 font-medium">
+          เที่ยวไหนดี
+        </h1>
+      </div>
+        <SearchBar />
+        <PlaceCards />
     </div>
   );
 }
