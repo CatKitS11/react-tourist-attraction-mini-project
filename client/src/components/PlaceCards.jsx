@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
+import ExternalLink from "./ExternalLink";
 const PlaceCards = ({ search, tagText }) => {
   const [places, setPlaces] = useState([]);
 
@@ -43,13 +44,13 @@ const PlaceCards = ({ search, tagText }) => {
                 ? place.description.slice(0, 100) + " "
                 : place.description}
             </p>
-            <a
+            <ExternalLink
               href={place.url}
-              target="_blank"
               className="text-sm  text-sky-500 font-normal justify-start text-left"
+              title={`อ่านข้อมูลเพิ่มเติมเกี่ยวกับ ${place.title}`}
             >
               อ่านต่อ
-            </a>
+            </ExternalLink>
             <div className="flex flex-row flex-wrap gap-2">
               <p className="text-sm font-normal">หมวด :</p>
               {place.tags.map((tag) => (
